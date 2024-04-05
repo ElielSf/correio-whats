@@ -1,0 +1,17 @@
+.Header {
+    height: 10vh;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Header__title {
+    font-size: 2.5rem;
+}
+
+.Header, .Header__title {
+    background-color: #131313;
+    color: white;
+}
