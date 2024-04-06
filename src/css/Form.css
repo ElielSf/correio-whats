@@ -2,5 +2,18 @@
     height: 90vh;
     width: 100%;
 
-    
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Card {
+    height: 60%;
+    width: 30%;
+    background-color: aliceblue;
+    border-radius: 15px;
+}
+
+.Button--send, .Button--whatsapp {
+    padding: 3% 15%;
 }
