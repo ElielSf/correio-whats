@@ -11,17 +11,18 @@ export default function Form() {
     const [endereco, setEndereco] = useState(null);
 
     const enviarDados = async () => {
-        let response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        let data = await response.json();
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
 
-        if (data.erro && data.erro === true) {
-            console.log('erro verdadeiro');
-            setEndereco(null);
-            setError(true); 
-        } else {
-            console.log('erro falso');
+            if (data.erro && data.erro === true) {
+                setError(true);
+                return;
+            }
+
             setEndereco(data);
-            setError(false); 
+        } catch (error) {
+            setEndereco(null);
         }
     }
 
@@ -35,7 +36,7 @@ export default function Form() {
     return (
         <div className='Form'>
             <div className='Card'>
-                <form className='Card__form' onSubmit={enviarDados}>
+                <div className='Card__form'>
                     <h3 className='Card__field'>Nome</h3>
                     <input className='Card__input'
                         value={nome}
@@ -65,52 +66,57 @@ export default function Form() {
                         value={cep}
                         onChange={(e) => setCep(e.target.value)}
                         type='number'
+                        min='0'
                         placeholder='Ex: 12345678'
-                        max='99999999'
                         required />
                 
-                    <button className='Button--send' type='submit' onClick={enviarDados}>Enviar dados</button>
-                </form>
-            </div>
-            {(error) && (
-                <div className='Card'>
-                    <h2 className='Card__error'>O CEP digitado não foi encontrado</h2>
+                    <button className='Button--send' onClick={enviarDados}>Enviar dados</button>
                 </div>
-                )
-            }
-            {(endereco !== null) && (
+            </div>
+            {error && (
                 <div className='Card'>
-                    <h3 className='Card__field'>Estado</h3>
-                    <p>
+                    <div className='Card__error'>
+                        <h1 className='Card__cep-error'>Cep inválido</h1>
+                    </div>
+                </div>
+            )
+            }
+            {endereco ? (
+                <div className='Card'>
+                    <div className='Card__address'>
+                        <h3 className='Card__field'>Estado</h3>
                         <input className='Card__input'
                             value={endereco.uf}
                             type='text'
-                            readOnly />
-                    </p>
+                            readOnly
+                            />
 
-                    <h3 className='Card__field'>Cidade</h3>
-                    <p>
+                        <h3 className='Card__field'>Cidade</h3>
                         <input className='Card__input'
                             value={endereco.localidade}
-                            readOnly />
-                    </p>
+                            type='text'
+                            readOnly
+                            />
 
-                    <h3 className='Card__field'>Bairro</h3>
-                    <p>
+                        <h3 className='Card__field'>Bairro</h3>
                         <input className='Card__input'
                             value={endereco.bairro}
-                            readOnly />
-                    </p>
-
-                    <h3 className='Card__field'>Localidade</h3>
-                    <p>
+                            type='text'
+                            readOnly
+                            />
+                    
+                        <h3 className='Card__field'>Localidade</h3>
                         <input className='Card__input'
                             value={endereco.logradouro}
-                            readOnly />
-                    </p>
-
-                    <button className='Button--whatsapp' onClick={chamarWhatsapp}>Enviar para o Whatsapp</button>
+                            type='text'
+                            readOnly
+                            />
+                    
+                        <button className='Button--whatsapp' onClick={chamarWhatsapp}>Enviar para Whatsapp</button>
+                    </div>
                 </div>
+                ) : (
+                    ''
                 )
             }
 

@@ -13,7 +13,7 @@
     border-radius: 15px;
 }
 
-.Card__form {
+.Card__form, .Card__address, .Card__error {
     width: 100%;
     height: 100%;
 
@@ -26,7 +26,11 @@
     border-radius: 30px;
 }
 
-.Card__input {
+.Card__field {
+    background: none;
+}
+
+.Card__input, .Card__response {
     width: 60%;
     height: 8%;
 
@@ -40,16 +44,17 @@
     padding-left: 10px;
 }
 
-.Card__field {
-    background: none;
-    font-size: 1.3em;
-
-    margin-top: 15px;
-}
-
 .Card__input:hover {
     border: solid 1px grey;
 
+}
+
+.Card__response {
+    background-color: white;
+}
+
+.Card__cep-error {
+    background: none;
 }
 
 .Button--send, .Button--whatsapp {
